@@ -6,6 +6,8 @@ use std::marker::PhantomData;
 use std::ptr::read;
 use std::ops::{Drop, Placer, Place, InPlace};
 use std::mem::{transmute, align_of, size_of, forget};
+use std::slice::{from_raw_parts, from_raw_parts_mut};
+use std::borrow::{Borrow, BorrowMut};
 use alloc::heap::{allocate, reallocate, deallocate, EMPTY};
 
 pub struct EmplacementVec<T> {
@@ -138,6 +140,12 @@ impl<T> EmplacementVec<T> {
                 }
             }
         }
+    }
+}
+
+impl<T> Borrow<[T]> for EmplacementVec<T> {
+    fn borrow(&self) -> &[T] {
+        unsafe { from_raw_parts(self.data, self.len) }
     }
 }
 
