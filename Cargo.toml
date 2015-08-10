@@ -1,0 +1,4 @@
+[package]
+name = "emplacement_vec"
+version = "0.1.0"
+authors = ["Connor Hilarides <connorcpu@live.com>"]
